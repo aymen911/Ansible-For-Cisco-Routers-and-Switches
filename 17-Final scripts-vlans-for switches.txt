@@ -1,0 +1,113 @@
+---
+-  hosts: all
+   connection: local
+   gather_facts: false
+   vars:
+     cli:
+       username: cisco
+       password: cisco
+
+   tasks:
+     - name: Facts
+       ios_facts:
+         provider: '{{ cli }}'
+
+     - name: Baseline
+       ios_config:
+         provider: '{{ cli }}'
+         lines:
+          - 'no ip http server'
+          - 'no ip http secure-server'
+          - 'enable password 12345'
+          - 'banner motd #Welcome to Ansible#'
+          - 'username cisco123 privilege 15 password 0 cisco123'
+          - 'username Ahmed privilege 15 password 0 a11111'
+          - 'service password-encryption'
+          - 'no ip domain-lookup'
+          - 'logging on'
+
+
+
+
+     - name: VTY
+       ios_config:
+         provider: '{{ cli }}'
+         parents: 'line vty 0 4'
+         lines: 'transport in all'
+         lines: 'login local'
+
+
+     - name: CONSOLE
+       ios_config:
+         provider: '{{ cli }}'
+         parents: 'line con 0'
+         lines: 'password 12345'
+         lines: 'login'
+
+
+     - name: OSPF
+       ios_config:
+         provider: '{{ cli }}'
+         parents: 'router ospf 10'
+         lines: 'network 0.0.0.0 255.255.255.255 area 0'
+
+
+     - name: Vlan 10
+       ios_config:
+         provider: '{{ cli }}'
+         parents: 'vlan 10'
+         lines: 'name IT'
+
+     - name: Vlan 20
+       ios_config:
+         provider: '{{ cli }}'
+         parents: 'vlan 20'
+         lines: 'name HR'
+
+     - name: Vlan 30
+       ios_config:
+         provider: '{{ cli }}'
+         parents: 'vlan 10'
+         lines: 'name Finace'
+
+     - name: Vlan 40
+       ios_config:
+         provider: '{{ cli }}'
+         parents: 'vlan 40'
+         lines: 'name Store'
+
+
+     - name: Vlan 50
+       ios_config:
+         provider: '{{ cli }}'
+         parents: 'vlan 50'
+         lines: 'name Voice'
+
+     - name: Vlan 60
+       ios_config:
+         provider: '{{ cli }}'
+         parents: 'vlan 60'
+         lines: 'name DB'
+
+     - name: Vlan 70
+       ios_config:
+         provider: '{{ cli }}'
+         parents: 'vlan 70'
+         lines: 'name WEB'
+
+
+     - name: Vlan 80
+       ios_config:
+         provider: '{{ cli }}'
+         parents: 'vlan 80'
+         lines: 'name App'
+
+
+
+
+   handlers:
+     - name: save ios
+       ios_command:
+         commands: "write mem"
+         timeout: 40
+       when: not ansible_check_mode

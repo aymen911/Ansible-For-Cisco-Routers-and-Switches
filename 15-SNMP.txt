@@ -1,0 +1,27 @@
+---
+-  hosts: all
+   connection: local
+   gather_facts: no
+
+   tasks:
+    - name: Set SNMP community
+      ios_config:
+       lines: "snmp-server community networklore"
+      notify: "save ios"
+
+    - name: Set SNMP contact
+      ios_config:
+        lines: "snmp-server contact SUPPORT"
+      notify: "save ios"
+
+    - name: Set SNMP location
+      ios_config:
+        lines: "snmp-server location TEST"
+      notify: "save ios"
+
+   handlers:
+     - name: save ios
+       ios_command:
+         commands: "write mem"
+         timeout: 40
+       when: not ansible_check_mode

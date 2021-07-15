@@ -1,0 +1,49 @@
+step 1
+create folder name interfaces in server like below:
+
+root@NetworkAutomation-2:~# mkdir show-version
+root@NetworkAutomation-2:~# cd run-config
+root@NetworkAutomation-2:~/show-version# ls
+root@NetworkAutomation-2:~/show-version# cd
+
+
+
+
+-------------------------------------------
+step 2 
+create ansible playbook to show and copy the output, then this file will be sent to interfaces file
+ in linux, below:
+
+---
+- name: show versioninfo
+  hosts: all
+  gather_facts: false
+  connection: local
+  tasks:
+    - name: run Run command
+      ios_command:
+        commands:
+          - show version
+
+      register: print_output
+    - debug: var=print_output.stdout_lines
+
+    - name: save outputto a file
+      copy: content="{{ print_output.stdout[0] }}" dest="./show-version/{{ inventory_hostname }}.txt"
+
+
+
+--------------------------------------------
+step 3
+check files saved in run-config follder
+
+root@NetworkAutomation-2:~# cd run-config
+root@NetworkAutomation-2:~/run-config#
+root@NetworkAutomation-2:~/run-config#
+root@NetworkAutomation-2:~/run-config#
+root@NetworkAutomation-2:~/run-config#
+root@NetworkAutomation-2:~/run-config# ls
+R1.txt  R2.txt  R3.txt  SW1.txt  SW2.txt
+
+
+
