@@ -1,0 +1,32 @@
+============================
+
+nano ansible.cfg
+
+[defaults]
+inventory = ./myhosts
+host_key_checking = false
+timeout = 15 
+deprecation_warnings=False
+
+============================
+
+nano myhosts
+
+[routers]
+R1
+R2
+R3
+
+[switches]
+SW1
+SW2
+
+============================
+
+nano /etc/hosts
+
+192.168.115.72 R1
+192.168.115.73 R2
+192.168.115.53 R3
+192.168.115.61 SW1
+192.168.115.62 SW2
