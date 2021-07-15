@@ -1,0 +1,56 @@
+===Router & Switch Config===
+R1:
+conf t
+hostname R1
+int g0/0
+ no sh
+ ip add 192.168.115.51 255.255.255.0
+
+ 
+R2:
+conf t
+hostname R2
+int g0/0
+ no sh
+ ip add 192.168.115.52 255.255.255.0
+
+ 
+R3:
+conf t
+hostname R3
+int fa0/0
+ no sh
+ ip add 192.168.115.53 255.255.255.0
+
+
+SW1:
+conf t
+hostname SW1
+int g0/0
+ no sw
+ no sh
+ ip add 192.168.115.61 255.255.255.0
+
+
+SW2:
+conf t
+hostname SW2
+int g0/0
+ no sh
+ no sw
+ ip add 192.168.115.62 255.255.255.0
+
+
+===ADD to all Routers and Switches===
+
+For Remote Accessibility:
+
+ip domain-n netautomation.com  
+cry key gen rsa
+1024
+usern cisco pas cisco
+usern cisco priv 15
+lin vty 0 4
+ tr i a
+ logi loc
+ exi
