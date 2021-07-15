@@ -1,0 +1,9 @@
+---
+- name: Get IP int br info
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: show ip int br
+      raw: "show ip int br"
+      register: print_output
+    - debug: var=print_output.stdout_lines

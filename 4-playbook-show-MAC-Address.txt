@@ -1,0 +1,14 @@
+---
+- name: Get MAC Adress info
+  hosts: all
+  gather_facts: false
+  connection: local
+  tasks:
+    - name: run multiple command 
+      ios_command:
+        commands:
+          - show vlan brief
+          - show ip int brief
+
+      register: print_output
+    - debug: var=print_output.stdout_lines

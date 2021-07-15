@@ -1,0 +1,9 @@
+---
+- name: Get ip route info
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: show ip route 
+      raw: "show ip route"
+      register: print_output
+    - debug: var=print_output.stdout_lines
