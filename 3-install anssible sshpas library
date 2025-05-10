@@ -1,0 +1,6 @@
+1- apt-get install sshpass
+
+Alternatively, you can install sshpass on RedHat/CentOS using the yum command:
+
+2- apt-get install epel-release
+3- apt-get install sshpass
